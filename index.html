@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Population Diversity Visual San francisco</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' /> 
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1;
+      }
+      #instrutions {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: 20px;
+        margin-top: 20px;
+        width: 25%;
+        z-index: 2;
+      }
+      .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+
+    }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXRjb2RlZG9nMDUiLCJhIjoiY2pxcnU5cjVjMG9tNjQzbXZhd2loaHhnbSJ9.-e3Bp-lsfnDcp3AiZMKAGQ';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v9',
+    zoom: 12,
+    center: [-122.475000, 37.753574]
+});
+
+map.on('load', function () {
+
+    map.addLayer({
+        'id': 'population',
+        'type': 'circle',
+        'source': {
+            type: 'vector',
+            url: 'mapbox://examples.8fgz4egr'
+        },
+        'source-layer': 'sf2010',
+        'paint': {
+            // make circles larger as the user zooms from z12 to z22
+            'circle-radius': {
+                'base': 1.75,
+                'stops': [[12, 2], [22, 180]]
+            },
+            // color circles by ethnicity, using a match expression
+            // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+            'circle-color': [
+                'match',
+                ['get', 'ethnicity'],
+                'White', '#fbb03b',
+                'Black', '#223b53',
+                'Hispanic', '#e55e5e',
+                'Asian', '#3bb2d0',
+                /* other */ '#ccc'
+            ]
+        }
+    });
+});
+</script>
+
+<div id="instrutions">
+  <div class="w3-card-4 w3-white">
+  <header class="w3-container w3-blue">
+  <h3>Population Diversity Visual <br>San francisco</h3>
+</header>
+
+<div class="w3-container">
+  <p>
+  <div class="w3-text-grey">
+  <h4 style="color: black;">Ethnicity</h4>
+  <span class="color-box" style="background-color: #fbb03b;"></span> Whites
+  <br><br>
+  <span class="color-box" style="background-color: #223b53;"></span> Black
+  <br><br>
+  <span class="color-box" style="background-color: #e55e5e;"></span> Hispanic
+  <br><br>
+  <span class="color-box" style="background-color: #3bb2d0;"></span> Asian
+  <br><br>
+  Data Driven model created to visualize dispersion of different ethnicity in San francisco.
+  <br>
+  </div>
+  </p>
+</div>
+
+<footer class="w3-container w3-blue">
+  <h5>
+    Designed Using MapboxGL JS
+    <br><br>
+    Find more projects by me on: <br>
+    <a href="https://atcodedog05.github.io/"
+    target="_blank">https://atcodedog05.github.io</a><br>
+    <a href="https://github.com/atcodedog05"
+    target="_blank">https://github.com/atcodedog05</a>
+  </h5>
+</footer>
+</div>
+</div>
+
+</body>
+</html>
